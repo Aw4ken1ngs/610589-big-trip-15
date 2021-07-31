@@ -15,6 +15,5 @@ export const createFiltersTemplate = () => (
     <label class="trip-filters__filter-label" for="filter-past">Past</label>
   </div>
 
-  <button class="visually-hidden" type="submit">Accept filter</button>
-</form>`
+  <button class="visually-hidden" type="submit">Accept filter</button>`
 );

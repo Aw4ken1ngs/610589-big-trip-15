@@ -1,6 +1,7 @@
-export const createDestinationTemplate = () => (
-  `<h3 class="event__section-title  event__section-title--destination">Destination</h3>
-  <p class="event__destination-description">Geneva is a city in Switzerland that lies at the southern tip of expansive Lac Léman (Lake Geneva). Surrounded by the Alps and Jura mountains, the city has views of dramatic Mont Blanc.</p>
+export const createDestinationTemplate = (des) => {
+  const { description } = des;
+  return `<h3 class="event__section-title  event__section-title--destination">Destination</h3>
+  <p class="event__destination-description">${description}</p>
 
   <div class="event__photos-container">
     <div class="event__photos-tape">
@@ -10,5 +11,5 @@ export const createDestinationTemplate = () => (
       <img class="event__photo" src="img/photos/4.jpg" alt="Event photo">
       <img class="event__photo" src="img/photos/5.jpg" alt="Event photo">
     </div>
-  </div>`
-);
+  </div>`;
+};

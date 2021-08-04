@@ -6,8 +6,12 @@ import { createSortingTemplate } from './view/sorting.js';
 import { createListTemplate } from './view/trip-list.js';
 import { createEditFormTemplate } from './view/edit-form.js';
 import { createDestinationTemplate } from './view/trip-destination.js';
+import { createElementListTemplate } from './view/trip-element.js';
+import { generateTrip } from './mock/trip.js';
 
-const DESTINATION_COUNT = 3;
+const DESTINATION_COUNT = 15;
+
+const trips = new Array(DESTINATION_COUNT).fill().map(generateTrip);
 
 const render = (container, template, place) => {
   container.insertAdjacentHTML(place, template);
@@ -33,11 +37,12 @@ render(siteMainContentElement, createListTemplate(), 'beforeend');
 const siteCreateEditFormElement = siteMainContentElement.querySelector('.trip-events__item');
 
 render(siteCreateEditFormElement, createEditFormTemplate(), 'afterbegin');
+render(siteCreateEditFormElement, createElementListTemplate(), 'beforeend');
 
 const DestinationListElement = siteMainContentElement.querySelector('.event__section--destination');
 
 render(DestinationListElement, createDestinationTemplate(), 'beforeend');
 
 for (let i = 0; i < DESTINATION_COUNT; i++) {
-  render(DestinationListElement, createDestinationTemplate(), 'beforeend');
+  render(siteCreateEditFormElement, createElementListTemplate(trips[i]), 'beforeend');
 }

@@ -1,14 +1,7 @@
 import dayjs from 'dayjs';
 //import flatpickr from 'flatpickr';
-
-//Генерируем случайное число
-const getRandomInteger = (a = 0, b = 1) => {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
-
-  return Math.floor(lower + Math.random() * (upper - lower + 1));
-};
-
+import { getRandomInteger } from '../utils.js';
+import { DESKRIPTIONS, TYPES, CITIES, PICTURES } from '../const.js';
 //Генерируем случайную дату +/- 7 дней
 const generateDate = () => {
 
@@ -20,31 +13,30 @@ const generateDate = () => {
 
 //Генерируем описание
 const generateDescription = () => {
-  const descriptions = [
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    'Cras aliquet varius magna, non porta ligula feugiat eget.',
-    'In rutrum ac purus sit amet tempus.',
-  ];
-
-  const randomIndex = getRandomInteger(0, descriptions.length - 1);
-
-  return descriptions[randomIndex];
+  const randomIndex = getRandomInteger(0, DESKRIPTIONS.length - 1);
+  return DESKRIPTIONS[randomIndex];
 };
 
 //Генерируем тип транспорта
 const getRandomPointType = () => {
-  const types = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant'];
-  const randomIndex = getRandomInteger(0, types.length - 1);
+  const randomIndex = getRandomInteger(0, TYPES.length - 1);
 
-  return types[randomIndex];
+  return TYPES[randomIndex];
 };
 
 //Генерируем случайный город
 const getRandomCity = () => {
-  const cities = ['Amsterdam', 'Geneva', 'Chamonix'];
-  const randomIndex = getRandomInteger(0, cities.length - 1);
+  const randomIndex = getRandomInteger(0, CITIES.length - 1);
 
-  return cities[randomIndex];
+  return CITIES[randomIndex];
+};
+
+//Генерируем случайную картинку
+
+const getRandomPictures = () => {
+  const randomIndex = getRandomInteger(0, PICTURES.length - 1);
+
+  return PICTURES[randomIndex];
 };
 
 //Получаем рандомную точку маршрута с полями
@@ -56,8 +48,10 @@ export const generateTrip = () => {
     city: getRandomCity(),
     dateFrom: date,
     dateTo: date,
-    pictures: 'http://picsum.photos/248/152?r=',
+    dateFirst: date,
+    pictures: getRandomPictures(),
     isFavorite: Boolean(getRandomInteger(0, 1)),
+    price: getRandomInteger(10, 1000),
     offers: {
       title: 'Choose meal',
       price: 180,

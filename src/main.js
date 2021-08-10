@@ -21,27 +21,27 @@ const siteMainElement = document.querySelector('.trip-main');
 const siteHeaderElement = siteMainElement.querySelector('.trip-controls__navigation');
 const siteFiltersElement = siteMainElement.querySelector('.trip-controls__filters');
 
-render(siteHeaderElement, createSiteMenuTemplate(), 'beforeend');
-render(siteFiltersElement, createFiltersTemplate(), 'beforeend');
-render(siteMainElement, createTripInfoTemplate(), 'afterbegin');
+render(siteHeaderElement, createSiteMenuTemplate(trips[0]), 'beforeend');
+render(siteFiltersElement, createFiltersTemplate(trips[0]), 'beforeend');
+render(siteMainElement, createTripInfoTemplate(trips[0]), 'afterbegin');
 
 const siteCostElement = siteMainElement.querySelector('.trip-info');
 
-render(siteCostElement, createTripCostTemplate(), 'beforeend');
+render(siteCostElement, createTripCostTemplate(trips[0]), 'beforeend');
 
 const siteMainContentElement = document.querySelector('.trip-events');
 
-render(siteMainContentElement, createSortingTemplate(), 'beforeend');
-render(siteMainContentElement, createListTemplate(), 'beforeend');
+render(siteMainContentElement, createSortingTemplate(trips[0]), 'beforeend');
+render(siteMainContentElement, createListTemplate(trips[0]), 'beforeend');
 
 const siteCreateEditFormElement = siteMainContentElement.querySelector('.trip-events__item');
 
-render(siteCreateEditFormElement, createEditFormTemplate(), 'afterbegin');
-render(siteCreateEditFormElement, createElementListTemplate(), 'beforeend');
+render(siteCreateEditFormElement, createEditFormTemplate(trips[0]), 'afterbegin');
+render(siteCreateEditFormElement, createElementListTemplate(trips[0]), 'beforeend');
 
 const DestinationListElement = siteMainContentElement.querySelector('.event__section--destination');
 
-render(DestinationListElement, createDestinationTemplate(), 'beforeend');
+render(DestinationListElement, createDestinationTemplate(trips[0]), 'beforeend');
 
 for (let i = 0; i < DESTINATION_COUNT; i++) {
   render(siteCreateEditFormElement, createElementListTemplate(trips[i]), 'beforeend');

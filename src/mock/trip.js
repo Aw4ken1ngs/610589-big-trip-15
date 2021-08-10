@@ -1,15 +1,21 @@
 import dayjs from 'dayjs';
-//import flatpickr from 'flatpickr';
 import { getRandomInteger } from '../utils.js';
 import { DESKRIPTIONS, TYPES, CITIES, PICTURES } from '../const.js';
 //Генерируем случайную дату +/- 7 дней
-const generateDate = () => {
+const generateDate = (duration, type = 'hour') => {
 
-  const maxDaysGap = 7;
-  const daysGap = getRandomInteger(-maxDaysGap, maxDaysGap);
+  const daysGap = getRandomInteger(-duration, duration);
 
-  return dayjs().add(daysGap, 'day').toDate();
+  return dayjs().add(daysGap, type).toDate();
 };
+
+// const generateTime = () => {
+//   return {
+//     from,
+//     to,
+//     duration,
+//   };
+// };
 
 //Генерируем описание
 const generateDescription = () => {
@@ -46,8 +52,8 @@ export const generateTrip = () => {
     description: generateDescription(),
     pointType: getRandomPointType(),
     city: getRandomCity(),
-    dateFrom: date,
-    dateTo: date,
+    timeFrom: generateDate(7),
+    timeTo: generateDate(7),
     dateFirst: date,
     pictures: getRandomPictures(),
     isFavorite: Boolean(getRandomInteger(0, 1)),

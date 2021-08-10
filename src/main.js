@@ -8,6 +8,7 @@ import { createEditFormTemplate } from './view/edit-form.js';
 import { createDestinationTemplate } from './view/trip-destination.js';
 import { createElementListTemplate } from './view/trip-element.js';
 import { generateTrip } from './mock/trip.js';
+import flatpickr from 'flatpickr';
 
 const DESTINATION_COUNT = 15;
 
@@ -46,3 +47,15 @@ render(DestinationListElement, createDestinationTemplate(trips[0]), 'beforeend')
 for (let i = 0; i < DESTINATION_COUNT; i++) {
   render(siteCreateEditFormElement, createElementListTemplate(trips[i]), 'beforeend');
 }
+
+flatpickr('#event-start-time-1', {
+  enableTime: true,
+  dateFormat: 'd/m/y H:i',
+  defaultDate: Date(),
+});
+
+flatpickr('#event-end-time-1', {
+  enableTime: true,
+  dateFormat: 'd/m/y H:i',
+  defaultDate: Date(),
+});

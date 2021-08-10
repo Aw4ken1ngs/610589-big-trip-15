@@ -8,5 +8,6 @@ export const getRandomInteger = (a = 0, b = 1) => {
 };
 
 export const humanizeTaskDateFirst = (dateFirsts) => dayjs(dateFirsts).format('D MMM');
-export const humanizeTaskDateFrom = (dateFrom) => dayjs(dateFrom).format('mm:ss');
-export const humanizeTaskDateTo = (dateTo) => dayjs(dateTo).format('mm:ss');
+export const humanizeTime = (time) => dayjs(time).format('hh:mm');
+
+

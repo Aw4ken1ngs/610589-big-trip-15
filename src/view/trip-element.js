@@ -1,7 +1,7 @@
-import { humanizeTaskDateFirst, humanizeTaskDateFrom, humanizeTaskDateTo } from '../utils.js';
+import { humanizeTaskDateFirst, humanizeTime } from '../utils.js';
 export const createElementListTemplate = (elementList) => {
 
-  const { pointType, city, price, dateFrom, dateTo, dateFirsts, isFavorite } = elementList;
+  const { pointType, city, price, timeFrom, timeTo, dateFirst, isFavorite } = elementList;
 
   const favoriteClassName = isFavorite
     ? 'event__favorite-btn  event__favorite-btn--active'
@@ -9,16 +9,16 @@ export const createElementListTemplate = (elementList) => {
 
   return `<li class="trip-events__item">
     <div class="event">
-      <time class="event__date" datetime="2019-03-18">${humanizeTaskDateFirst(dateFirsts)}</time>
+      <time class="event__date" datetime="2019-03-18">${humanizeTaskDateFirst(dateFirst)}</time>
       <div class="event__type">
         <img class="event__type-icon" width="42" height="42" src="img/icons/${pointType}.png" alt="Event type icon">
       </div>
       <h3 class="event__title">${pointType} ${city}</h3>
       <div class="event__schedule">
         <p class="event__time">
-          <time class="event__start-time" datetime="2019-03-18T10:30">${humanizeTaskDateFrom(dateFrom)}</time>
+          <time class="event__start-time" datetime="2019-03-18T10:30">${humanizeTime(timeFrom)}</time>
           &mdash;
-          <time class="event__end-time" datetime="2019-03-18T11:00">${humanizeTaskDateTo(dateTo)}</time>
+          <time class="event__end-time" datetime="2019-03-18T11:00">${humanizeTime(timeTo)}</time>
         </p>
         <p class="event__duration">30M</p>
       </div>

@@ -1,4 +1,4 @@
-const DESKRIPTIONS = [
+const DESCRIPTIONS = [
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
   'Cras aliquet varius magna, non porta ligula feugiat eget.',
   'In rutrum ac purus sit amet tempus.',
@@ -10,4 +10,4 @@ const CITIES = ['Amsterdam', 'Geneva', 'Chamonix'];
 
 const PICTURES = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg'];
 
-export { DESKRIPTIONS, TYPES, CITIES, PICTURES };
+export { DESCRIPTIONS, TYPES, CITIES, PICTURES };

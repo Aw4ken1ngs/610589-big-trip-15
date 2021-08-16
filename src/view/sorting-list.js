@@ -1,19 +1,13 @@
 import { createElement } from '../utils.js';
+const createSortingListTemplate = () => '<form class="trip-events__trip-sort  trip-sort" action="#" method="get"></form>';
 
-const createListTemplate = () => (
-  `<ul class="trip-events__list">
-  <li class="trip-events__item">
-  </li>
-</ul>`
-);
-
-export default class List {
+export default class SortingList {
   constructor() {
     this._element = null;
   }
 
   getTemplate() {
-    return createListTemplate();
+    return createSortingListTemplate();
   }
 
   getElement() {

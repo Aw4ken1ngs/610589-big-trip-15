@@ -1,7 +1,7 @@
-import { humanizeTaskDateFirst, humanizeTime } from '../utils.js';
-export const createElementListTemplate = (elementList) => {
+import { humanizeTaskDateFirst, humanizeTime, createElement } from '../utils.js';
+const createElementListTemplate = (tripEventsItem) => {
 
-  const { pointType, city, price, timeFrom, timeTo, dateFirst, isFavorite } = elementList;
+  const { pointType, city, price, timeFrom, timeTo, dateFirst, isFavorite } = tripEventsItem;
 
   const favoriteClassName = isFavorite
     ? 'event__favorite-btn  event__favorite-btn--active'
@@ -45,3 +45,26 @@ export const createElementListTemplate = (elementList) => {
     </div>
   </li>`;
 };
+
+export default class ElementList {
+  constructor(elementsList) {
+    this._elementsList = elementsList;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createElementListTemplate(this._elementsList);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

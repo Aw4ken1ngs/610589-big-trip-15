@@ -7,13 +7,13 @@ const createTripCostTemplate = (tripCost) => {
 };
 
 export default class TripCost {
-  constructor(tripCosts) {
-    this._tripCosts = tripCosts;
+  constructor(tripCost) {
+    this._tripCost = tripCost;
     this._element = null;
   }
 
   getTemplate() {
-    return createTripCostTemplate(this._tripCosts);
+    return createTripCostTemplate(this._tripCost);
   }
 
   getElement() {

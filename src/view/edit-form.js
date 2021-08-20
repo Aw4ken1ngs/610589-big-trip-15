@@ -132,12 +132,13 @@ const createEditFormTemplate = (edit = {}) => {
 };
 
 export default class EditForm {
-  constructor() {
+  constructor(edit) {
+    this._edit = edit;
     this._element = null;
   }
 
   getTemplate() {
-    return createEditFormTemplate();
+    return createEditFormTemplate(this._edit);
   }
 
   getElement() {

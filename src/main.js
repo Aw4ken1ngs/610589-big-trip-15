@@ -32,10 +32,12 @@ const renderTrip = (tripListElement, trip) => {
     tripListElement.replaceChild(tripComponent.getElement(), tripEditComponent.getElement());
   };
 
-  tripComponent.getElement().querySelector('.event__rollup-btn').addEventListener('click', () => {
+  tripComponent.getElement().querySelector('.event__rollup-btn').addEventListener('click', (evt) => {
+    evt.preventDefault();
     replaceCardToForm();
   });
-  tripEditComponent.getElement().querySelector('.event__header').addEventListener('submit', (evt) => {
+
+  tripEditComponent.getElement().addEventListener('submit', (evt) => {
     evt.preventDefault();
     replaceFormToCard();
   });
@@ -58,17 +60,17 @@ render(siteMainContentElement, SortingListComponent.getElement(), RenderPosition
 render(SortingListComponent.getElement(), new SortingView(trips[0]).getElement(), RenderPosition.BEFOREEND);
 render(siteMainContentElement, new ListView(trips[0]).getElement(), RenderPosition.BEFOREEND);
 
-const siteCreateEditFormElement = siteMainContentElement.querySelector('.trip-events__item');
+const siteCreateEditFormElement = siteMainContentElement.querySelector('.trip-events__list');
 
 render(siteCreateEditFormElement, new EditFormView(trips[0]).getElement(), RenderPosition.AFTERBEGIN);
-render(siteCreateEditFormElement, new ElementListView(trips[0]).getElement(), RenderPosition.BEFOREEND);
+//render(siteCreateEditFormElement, new ElementListView(trips[0]).getElement(), RenderPosition.BEFOREEND);
 
 const DestinationListElement = siteMainContentElement.querySelector('.event__section--destination');
 
 render(DestinationListElement, new DestinationView(trips[0]).getElement(), RenderPosition.BEFOREEND);
 
 for (let i = 0; i < DESTINATIONS_COUNT; i++) {
-  renderTrip(siteCreateEditFormElement, new ElementListView(trips[i]).getElement(), RenderPosition.BEFOREEND);
+  renderTrip(siteCreateEditFormElement, trips[i], RenderPosition.BEFOREEND);
 }
 
 flatpickr('#event-start-time-1', {

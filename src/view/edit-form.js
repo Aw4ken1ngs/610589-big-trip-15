@@ -1,3 +1,5 @@
+import { createElement } from '../utils.js';
+
 const createEditFormPointTypeTemplate = (CurrentpointType) => {
   const types = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant'];
   return types.map((pointType) =>
@@ -8,17 +10,16 @@ const createEditFormPointTypeTemplate = (CurrentpointType) => {
 </div>`).join('');
 };
 
-export const createEditFormTemplate = (edit = {}) => {
+const createEditFormTemplate = (edit = {}) => {
 
   const {
     description,
     pointType = 'taxi',
     city = 'Amsterdam',
-    //date = null,
     price = '',
   } = edit;
 
-  const TypesTemplate = createEditFormPointTypeTemplate(pointType);
+  const typesTemplate = createEditFormPointTypeTemplate(pointType);
 
   return `<form class="event event--edit" action="#" method="post">
   <header class="event__header">
@@ -32,7 +33,7 @@ export const createEditFormTemplate = (edit = {}) => {
       <div class="event__type-list">
         <fieldset class="event__type-group">
           <legend class="visually-hidden">Event type</legend>
-          ${TypesTemplate}
+          ${typesTemplate}
         </fieldset>
       </div>
     </div>
@@ -129,3 +130,26 @@ export const createEditFormTemplate = (edit = {}) => {
   </section>
 </form>`;
 };
+
+export default class EditForm {
+  constructor(edit) {
+    this._edit = edit;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createEditFormTemplate(this._edit);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

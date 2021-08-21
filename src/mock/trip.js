@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { getRandomInteger } from '../utils.js';
-import { DESKRIPTIONS, TYPES, CITIES, PICTURES } from '../const.js';
+import { DESCRIPTIONS, TYPES, CITIES, PICTURES } from '../const.js';
 //Генерируем случайную дату +/- 7 дней
 const generateDate = (duration, type = 'hour') => {
 
@@ -19,8 +19,8 @@ const generateDate = (duration, type = 'hour') => {
 
 //Генерируем описание
 const generateDescription = () => {
-  const randomIndex = getRandomInteger(0, DESKRIPTIONS.length - 1);
-  return DESKRIPTIONS[randomIndex];
+  const randomIndex = getRandomInteger(0, DESCRIPTIONS.length - 1);
+  return DESCRIPTIONS[randomIndex];
 };
 
 //Генерируем тип транспорта

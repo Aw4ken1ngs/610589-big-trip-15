@@ -7,6 +7,7 @@ import ListView from './view/trip-list.js';
 import EditFormView from './view/edit-form.js';
 import DestinationView from './view/trip-destination.js';
 import ElementListView from './view/trip-element.js';
+import NoTripView from './view/list-empty.js';
 import { generateTrip } from './mock/trip.js';
 import { render, RenderPosition } from './utils.js';
 import SortingListView from './view/sorting-list.js';
@@ -32,16 +33,32 @@ const renderTrip = (tripListElement, trip) => {
     tripListElement.replaceChild(tripComponent.getElement(), tripEditComponent.getElement());
   };
 
+  const onEscKeyDown = (evt) => {
+    if (evt.key === 'Escape' || evt.key === 'Esc' || document.querySelector('.event__rollup-btn').addEventListener('click')) {
+      evt.preventDefault();
+      replaceFormToCard();
+      document.removeEventListener('keydown', onEscKeyDown);
+    }
+  };
+
   tripComponent.getElement().querySelector('.event__rollup-btn').addEventListener('click', (evt) => {
     evt.preventDefault();
     replaceCardToForm();
+    document.addEventListener('keydown', onEscKeyDown);
   });
 
   tripEditComponent.getElement().addEventListener('submit', (evt) => {
     evt.preventDefault();
     replaceFormToCard();
+    document.removeEventListener('keydown', onEscKeyDown);
   });
 
+  const onHideFormBtnClick = () => {
+    replaceFormToCard();
+    document.removeEventListener('keydown', onEscKeyDown);
+  };
+
+  tripEditComponent.getElement().querySelector('.event__rollup-btn').addEventListener('click', onHideFormBtnClick);
   render(tripListElement, tripComponent.getElement(), RenderPosition.BEFOREEND);
 };
 
@@ -63,11 +80,16 @@ render(siteMainContentElement, new ListView(trips[0]).getElement(), RenderPositi
 const siteCreateEditFormElement = siteMainContentElement.querySelector('.trip-events__list');
 
 render(siteCreateEditFormElement, new EditFormView(trips[0]).getElement(), RenderPosition.AFTERBEGIN);
-//render(siteCreateEditFormElement, new ElementListView(trips[0]).getElement(), RenderPosition.BEFOREEND);
 
 const DestinationListElement = siteMainContentElement.querySelector('.event__section--destination');
 
 render(DestinationListElement, new DestinationView(trips[0]).getElement(), RenderPosition.BEFOREEND);
+
+if (trips.length === 0) {
+  render(siteMainContentElement, new NoTripView().getElement());
+} else {
+  render(siteMainContentElement, new SortingView().getElement());
+}
 
 for (let i = 0; i < DESTINATIONS_COUNT; i++) {
   renderTrip(siteCreateEditFormElement, trips[i], RenderPosition.BEFOREEND);

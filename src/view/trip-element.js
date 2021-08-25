@@ -1,4 +1,6 @@
-import { humanizeTaskDateFirst, humanizeTime, createElement } from '../utils.js';
+import { humanizeTaskDateFirst, humanizeTime } from '../utils/trip.js';
+import AbstractView from './abstract.js';
+
 const createElementListTemplate = (tripEventsItem) => {
 
   const { pointType, city, price, timeFrom, timeTo, dateFirst, isFavorite } = tripEventsItem;
@@ -46,25 +48,23 @@ const createElementListTemplate = (tripEventsItem) => {
   </li>`;
 };
 
-export default class ElementList {
+export default class ElementList extends AbstractView {
   constructor(elementsList) {
+    super();
     this._elementsList = elementsList;
-    this._element = null;
+    this._editClickHandler = this._editClickHandler.bind(this);
   }
 
   getTemplate() {
     return createElementListTemplate(this._elementsList);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
+  _editClickHandler() {
+    this._callback.editClick();
   }
 
-  removeElement() {
-    this._element = null;
+  setEditClickHandler(callback) {
+    this._callback.editClick = callback;
+    this.getElement().querySelector('.event__rollup-btn').addEventListener('click', this._editClickHandler);
   }
 }

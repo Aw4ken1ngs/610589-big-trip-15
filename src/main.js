@@ -9,7 +9,7 @@ import DestinationView from './view/trip-destination.js';
 import ElementListView from './view/trip-element.js';
 import NoTripView from './view/list-empty.js';
 import { generateTrip } from './mock/trip.js';
-import { render, RenderPosition } from './utils.js';
+import { render, RenderPosition, Key, replace } from './utils/render.js';
 import SortingListView from './view/sorting-list.js';
 import flatpickr from 'flatpickr';
 
@@ -25,70 +25,82 @@ const renderTrip = (tripListElement, trip) => {
   const tripComponent = new ElementListView(trip);
   const tripEditComponent = new EditFormView(trip);
 
-  const replaceCardToForm = () => {
-    tripListElement.replaceChild(tripEditComponent.getElement(), tripComponent.getElement());
+  const replaceEventToForm = () => {
+    replace(tripEditComponent, tripComponent);
   };
 
-  const replaceFormToCard = () => {
-    tripListElement.replaceChild(tripComponent.getElement(), tripEditComponent.getElement());
+  const replaceFormToEvent = () => {
+    replace(tripComponent, tripEditComponent);
   };
 
   const onEscKeyDown = (evt) => {
-    if (evt.key === 'Escape' || evt.key === 'Esc' || document.querySelector('.event__rollup-btn').addEventListener('click')) {
+    if (evt.key === Key.ESCAPE || evt.key === Key.ESC) {
       evt.preventDefault();
-      replaceFormToCard();
-      document.removeEventListener('keydown', onEscKeyDown);
+      replaceFormToEvent();
     }
   };
 
-  tripComponent.getElement().querySelector('.event__rollup-btn').addEventListener('click', (evt) => {
-    evt.preventDefault();
-    replaceCardToForm();
-    document.addEventListener('keydown', onEscKeyDown);
-  });
+  // tripComponent.setEditClickHandler(() => {
+  //   replaceEventToForm();
+  //   document.addEventListener('keydown', onEscKeyDown);
+  // });
 
-  tripEditComponent.getElement().addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    replaceFormToCard();
-    document.removeEventListener('keydown', onEscKeyDown);
-  });
+  // tripEditComponent.setFormSubmitHandler(() => {
+  //   replaceFormToEvent();
+  //   document.removeEventListener('keydown', onEscKeyDown);
+  // });
 
-  const onHideFormBtnClick = () => {
-    replaceFormToCard();
-    document.removeEventListener('keydown', onEscKeyDown);
+  // const onHideFormBtnClick = () => {
+  //   replaceFormToEvent();
+  //   document.removeEventListener('keydown', onEscKeyDown);
+  // };
+
+  const onRollUpBtnClick = () => {
+    replaceEventToForm();
+    window.addEventListener('keydown', onEscKeyDown);
   };
 
-  tripEditComponent.getElement().querySelector('.event__rollup-btn').addEventListener('click', onHideFormBtnClick);
-  render(tripListElement, tripComponent.getElement(), RenderPosition.BEFOREEND);
+  const onEditFormSubmit = () => {
+    replaceFormToEvent();
+  };
+
+  const onHideFormBtnClick = () => {
+    replaceFormToEvent();
+  };
+  tripComponent.setEditClickHandler(onRollUpBtnClick);
+  tripEditComponent.setFormSubmitHandler(onEditFormSubmit);
+  tripEditComponent.setHideFormBtnClickHandler(onHideFormBtnClick);
+  // tripEditComponent.getElement().querySelector('.event__rollup-btn').addEventListener('click', onHideFormBtnClick);
+  render(tripListElement, tripComponent, RenderPosition.BEFOREEND);
 };
 
-render(siteHeaderElement, new SiteMenuView(trips[0]).getElement(), RenderPosition.BEFOREEND);
-render(siteMainElement, new TripInfoView(trips[0]).getElement(), RenderPosition.AFTERBEGIN);
-render(siteFiltersElement, new FiltersView(trips[0]).getElement(), RenderPosition.BEFOREEND);
+render(siteHeaderElement, new SiteMenuView(), RenderPosition.BEFOREEND);
+render(siteMainElement, new TripInfoView(), RenderPosition.AFTERBEGIN);
+render(siteFiltersElement, new FiltersView(), RenderPosition.BEFOREEND);
 
 const siteCostElement = siteMainElement.querySelector('.trip-info');
 
-render(siteCostElement, new TripCostView(trips[0]).getElement(), RenderPosition.BEFOREEND);
+render(siteCostElement, new TripCostView(trips), RenderPosition.BEFOREEND);
 
 const siteMainContentElement = document.querySelector('.trip-events');
 
 const SortingListComponent = new SortingListView();
-render(siteMainContentElement, SortingListComponent.getElement(), RenderPosition.AFTERBEGIN);
-render(SortingListComponent.getElement(), new SortingView(trips[0]).getElement(), RenderPosition.BEFOREEND);
-render(siteMainContentElement, new ListView(trips[0]).getElement(), RenderPosition.BEFOREEND);
+render(siteMainContentElement, SortingListComponent, RenderPosition.AFTERBEGIN);
+render(SortingListComponent, new SortingView(), RenderPosition.BEFOREEND);
+render(siteMainContentElement, new ListView(), RenderPosition.BEFOREEND);
 
 const siteCreateEditFormElement = siteMainContentElement.querySelector('.trip-events__list');
 
-render(siteCreateEditFormElement, new EditFormView(trips[0]).getElement(), RenderPosition.AFTERBEGIN);
+render(siteCreateEditFormElement, new EditFormView(trips[0]), RenderPosition.AFTERBEGIN);
 
 const DestinationListElement = siteMainContentElement.querySelector('.event__section--destination');
 
-render(DestinationListElement, new DestinationView(trips[0]).getElement(), RenderPosition.BEFOREEND);
+render(DestinationListElement, new DestinationView(trips[0]), RenderPosition.BEFOREEND);
 
 if (trips.length === 0) {
-  render(siteMainContentElement, new NoTripView().getElement());
+  render(siteMainContentElement, new NoTripView());
 } else {
-  render(siteMainContentElement, new SortingView().getElement());
+  render(siteMainContentElement, new SortingView());
 }
 
 for (let i = 0; i < DESTINATIONS_COUNT; i++) {

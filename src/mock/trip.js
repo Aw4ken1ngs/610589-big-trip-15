@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { getRandomInteger } from '../utils.js';
+import { getRandomInteger } from '../utils/common.js';
 import { DESCRIPTIONS, TYPES, CITIES, PICTURES } from '../const.js';
 //Генерируем случайную дату +/- 7 дней
 const generateDate = (duration, type = 'hour') => {

@@ -1,4 +1,5 @@
-import { createElement } from '../utils.js';
+import AbstractView from './abstract.js';
+
 const createDestinationTemplate = (descriptions) => {
   const { pictures } = descriptions;
   return `<div class="event__photos-container">
@@ -12,25 +13,13 @@ const createDestinationTemplate = (descriptions) => {
   </div>`;
 };
 
-export default class Destination {
+export default class Destination extends AbstractView {
   constructor(destinations) {
+    super();
     this._destinations = destinations;
-    this._element = null;
   }
 
   getTemplate() {
     return createDestinationTemplate(this._destinations);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

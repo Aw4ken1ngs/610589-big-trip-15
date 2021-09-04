@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import { getRandomInteger } from '../utils/common.js';
 import { DESCRIPTIONS, TYPES, CITIES, PICTURES } from '../const.js';
+import { nanoid } from 'nanoid';
 //Генерируем случайную дату +/- 7 дней
 const generateDate = (duration, type = 'hour') => {
 
@@ -56,6 +57,7 @@ export const generateTrip = () => {
     timeTo: generateDate(7),
     dateFirst: date,
     pictures: getRandomPictures(),
+    id: nanoid(),
     isFavorite: Boolean(getRandomInteger(0, 1)),
     price: getRandomInteger(10, 1000),
     offers: {

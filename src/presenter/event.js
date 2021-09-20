@@ -1,11 +1,10 @@
 import ElementListView from '../view/trip-element.js';
 import EditFormView from '../view/edit-form.js';
-import { render, replace, remove, Key } from '../utils/render.js';
+import { render, replace, remove, Key, RenderPosition } from '../utils/render.js';
 
 export default class Event {
   constructor(eventList) {
     this._eventList = eventList;
-    this._eventComponent = null;
     this._editEventComponent = null;
     this._setEditClickHandler = this._setEditClickHandler.bind(this);
     this._editFormSubmitHandler = this._editFormSubmitHandler.bind(this);
@@ -29,7 +28,7 @@ export default class Event {
     this._editEventComponent.setHideFormBtnClickHandler(this._hideFormBtnClickHandler);
 
     if (prevEventComponent === null || prevEditEventComponent === null) {
-      render(this._eventList, this._eventComponent);
+      render(this._eventList, this._eventComponent, RenderPosition.BEFOREEND);
       return;
     }
 

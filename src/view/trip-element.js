@@ -1,9 +1,9 @@
 import { humanizeTaskDateFirst, humanizeTime } from '../utils/trip.js';
 import AbstractView from './abstract.js';
 
-const createElementListTemplate = (tripEventsItem) => {
+const createElementListTemplate = (elementsList) => {
 
-  const { pointType, city, price, timeFrom, timeTo, dateFirst, isFavorite } = tripEventsItem;
+  const { pointType, city, price, timeFrom, timeTo, dateFirst, isFavorite } = elementsList;
 
   const favoriteClassName = isFavorite
     ? 'event__favorite-btn  event__favorite-btn--active'

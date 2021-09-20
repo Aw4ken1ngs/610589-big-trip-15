@@ -109,8 +109,8 @@ const DESTINATIONS_COUNT = 15;
 
 const trips = new Array(DESTINATIONS_COUNT).fill().map(generateTrip);
 const tripMain = document.querySelector('.trip-main');
-const eventsContainer = document.querySelector('.trip-events');
-new TripPresenter(tripMain, eventsContainer).init(trips);
+const tripsContainer = document.querySelector('.trip-events');
+new TripPresenter(tripMain, tripsContainer).init(trips);
 
 flatpickr('#event-start-time-1', {
   enableTime: true,

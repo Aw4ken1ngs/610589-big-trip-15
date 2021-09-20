@@ -10,13 +10,13 @@ import NoTripView from '../view/list-empty.js';
 import { render, RenderPosition } from '../utils/render.js';
 import SortingListView from '../view/sorting-list.js';
 
-
 const DESTINATIONS_COUNT = 15;
-
 export default class Trip {
   constructor(tripMain, tripsContainer) {
+
     this._destinationsCount = DESTINATIONS_COUNT;
     this._tripMain = tripMain;
+    this._trips = null;
     this._tripNav = this._tripMain.querySelector('.trip-controls__navigation');
     this._filtersContainer = this._tripMain.querySelector('.trip-controls__filters');
     this._tripsContainer = tripsContainer;
@@ -34,9 +34,11 @@ export default class Trip {
     this._handleEventChange = this._handleEventChange.bind(this);
   }
 
-  init(trips) {
+  init(trips, tripsContainer) {
     this._trips = trips.slice();
-    this._renderTrips();
+    this._renderTrips(trips, tripsContainer);
+    this._renderTrip();
+
   }
 
   _handleEventChange(updatedTrip) {
@@ -45,49 +47,49 @@ export default class Trip {
   }
 
   _renderTripInfo() {
-    render(this._tripMain, this._TripInfoComponent, RenderPosition.AFTERBEGIN);
+    render(this._tripMain, this._tripInfoComponent, RenderPosition.AFTERBEGIN);
   }
 
   _renderTripCost() {
-    render(this._TripInfoComponent, this._tripCostComponent);
+    render(this._tripInfoComponent, this._tripCostComponent, RenderPosition.BEFOREEND);
   }
 
   _renderMenu() {
-    render(this._tripNav, this._menuViewComponent);
+    render(this._tripNav, this._menuViewComponent, RenderPosition.BEFOREEND);
   }
 
   _renderFilters() {
-    render(this._filtersContainer, this._filtersComponent);
+    render(this._filtersContainer, this._filtersComponent, RenderPosition.BEFOREEND);
   }
 
   _renderControls() {
-    this._renderMenuView();
+    this._renderMenu();
     this._renderFilters();
   }
 
   _renderNoTrips() {
-    render(this._TripsContainer, this._noTripComponent);
+    render(this._tripsContainer, this._noTripComponent, RenderPosition.BEFOREEND);
   }
 
   _renderSort() {
-    render(this._TripsContainer, this._sortComponent);
+    render(this._tripsContainer, this._sortComponent, RenderPosition.BEFOREEND);
   }
 
   _renderTripList() {
-    render(this._TripsContainer, this._tripListComponent);
+    render(this._tripsContainer, this._tripListComponent, RenderPosition.BEFOREEND);
   }
 
-  _renderTrips(tripList, trips) {
-    for (let i = 0; i < this._eventCount; i++) {
-      const eventPresenter = new EventPresenter(tripList);
-      eventPresenter.init(trips[i]);
-      this._eventPresenter.set(trips[i].id, eventPresenter);
+  _renderTrips() {
+    for (let i = 0; i < this._destinationsCount; i++) {
+      const eventPresenter = new EventPresenter(this._tripsContainer);
+      eventPresenter.init(this._trips[i]);
+      this._tripsPresenter.set(this._trips[i].id, eventPresenter);
     }
   }
 
   _renderTrip() {
     this._renderTripInfo();
-    this._renderCost();
+    this._renderTripCost();
     this._renderControls();
 
     if (this._trips.length === 0) {
@@ -99,3 +101,4 @@ export default class Trip {
     this._renderTrips(this._tripListComponent, this._trips, this._handleEventChange);
   }
 }
+

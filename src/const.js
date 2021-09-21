@@ -4,10 +4,10 @@ const DESCRIPTIONS = [
   'In rutrum ac purus sit amet tempus.',
 ];
 
-const TYPES = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant'];
+// const TYPES = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant'];
 
 const CITIES = ['Amsterdam', 'Geneva', 'Chamonix'];
 
 const PICTURES = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg'];
 
-export { DESCRIPTIONS, TYPES, CITIES, PICTURES };
+export { DESCRIPTIONS, CITIES, PICTURES };

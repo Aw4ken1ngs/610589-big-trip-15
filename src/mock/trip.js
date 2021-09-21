@@ -1,6 +1,9 @@
 import dayjs from 'dayjs';
 import { getRandomInteger } from '../utils/common.js';
-import { DESCRIPTIONS, TYPES, CITIES, PICTURES } from '../const.js';
+import { DESCRIPTIONS, CITIES, PICTURES } from '../const.js';
+import { nanoid } from 'nanoid';
+
+export const TYPES = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant'];
 //Генерируем случайную дату +/- 7 дней
 const generateDate = (duration, type = 'hour') => {
 
@@ -24,11 +27,11 @@ const generateDescription = () => {
 };
 
 //Генерируем тип транспорта
-const getRandomPointType = () => {
-  const randomIndex = getRandomInteger(0, TYPES.length - 1);
+// const getRandomPointType = () => {
+//   const randomIndex = getRandomInteger(0, TYPES.length - 1);
 
-  return TYPES[randomIndex];
-};
+//   return TYPES[randomIndex];
+// };
 
 //Генерируем случайный город
 const getRandomCity = () => {
@@ -48,16 +51,18 @@ const getRandomPictures = () => {
 //Получаем рандомную точку маршрута с полями
 export const generateTrip = () => {
   const date = generateDate();
+  const pointType = TYPES[getRandomInteger(0, TYPES.length - 1)];
   return {
     description: generateDescription(),
-    pointType: getRandomPointType(),
     city: getRandomCity(),
     timeFrom: generateDate(7),
     timeTo: generateDate(7),
     dateFirst: date,
     pictures: getRandomPictures(),
+    id: nanoid(),
     isFavorite: Boolean(getRandomInteger(0, 1)),
     price: getRandomInteger(10, 1000),
+    pointType,
     offers: {
       title: 'Choose meal',
       price: 180,

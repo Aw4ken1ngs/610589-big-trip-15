@@ -1,9 +1,9 @@
 import { humanizeTaskDateFirst, humanizeTime } from '../utils/trip.js';
 import AbstractView from './abstract.js';
 
-const createElementListTemplate = (tripEventsItem) => {
+const createElementListTemplate = (elementsList) => {
 
-  const { pointType, city, price, timeFrom, timeTo, dateFirst, isFavorite } = tripEventsItem;
+  const { pointType, city, price, timeFrom, timeTo, dateFirst, isFavorite } = elementsList;
 
   const favoriteClassName = isFavorite
     ? 'event__favorite-btn  event__favorite-btn--active'
@@ -53,6 +53,7 @@ export default class ElementList extends AbstractView {
     super();
     this._elementsList = elementsList;
     this._editClickHandler = this._editClickHandler.bind(this);
+    this._favoriteBtnClickHandler = this._favoriteBtnClickHandler.bind(this);
   }
 
   getTemplate() {
@@ -63,8 +64,18 @@ export default class ElementList extends AbstractView {
     this._callback.editClick();
   }
 
+  _favoriteBtnClickHandler(evt) {
+    evt.currentTarget.classList.toggle('event__favorite-btn--active');
+    this._callback.favoriteBtnClick();
+  }
+
   setEditClickHandler(callback) {
     this._callback.editClick = callback;
     this.getElement().querySelector('.event__rollup-btn').addEventListener('click', this._editClickHandler);
+  }
+
+  setFavoriteBtnClickHandler(callback) {
+    this._callback.favoriteBtnClick = callback;
+    this.getElement().querySelector('.event__favorite-btn').addEventListener('click', this._favoriteBtnClickHandler);
   }
 }
